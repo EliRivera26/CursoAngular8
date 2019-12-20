@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+    background: url(https://integraassets.s3.amazonaws.com/fotos+de+fondo/obscuros/5.png);
+    height: 100%;
+    width: 100%;
+}
+
+html.fullscreen, html.fullscreen body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    background: #f5f7fa;
+    overflow: hidden;
+}
