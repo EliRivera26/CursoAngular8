@@ -1,9 +1,10 @@
-import { Component, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { VirtualTimeScheduler } from 'rxjs';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild, Inject, OnChanges } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalOptions, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserEdit, faTrashAlt, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { filter, map, retry } from 'rxjs/operators';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 
 @Component({
@@ -20,56 +21,109 @@ export class AppComponent {
   searchText = '';
   modal:NgbModalRef;
   enviado:boolean;
-  usuariosfiltrados=[];
+  usuarios=[];
   formValues: any;
   reset = false;
+  baseUrl="http://localhost:5000/api/";
+  faUser = faUser;
+  faUserEdit = faUserEdit;
+  faTrashAlt = faTrashAlt;
+  closeResult: string;
+  modalOptions:NgbModalOptions;
 
-public get id() { return this.form.get('id'); }
-public get nombre() { return this.form.get('nombre'); }
-public get apellido() { return this.form.get('apellido'); }
-public get tel() { return this.form.get('tel'); }
-public get edad() { return this.form.get('edad'); }
 
-  adduser(mimodal){
-    this.enviado = true;
+//----------------Agregar usuario----------------
+
+  async adduser(mimodal, usuario) {
+    
     if(this.form.valid){
-      this._usuarios.push(JSON.parse(JSON.stringify(this._usuario)));
+      this.enviado = true;
+      var x;
+      
+      if(usuario.id){
+        x = await this.http.put<Usuario>(this.baseUrl + "Values/"+ usuario.id, usuario).toPromise();
+        console.log(x)
+        //this._usuario=usuario;
+        this.getUsuarios();
+      }
+      else{
+        x = await this.http.post<Usuario>(this.baseUrl + "Values", usuario).toPromise()
+        console.log(x)
+        
+      }
+
+      usuario = x;
+      this.usuarios.push(JSON.parse(JSON.stringify(this._usuario)));
       this._usuario = {};
       this.reset = false;
       this.filtrar();
-      mimodal.close();
+      mimodal.close();     
     }
-    else{
-      this.reset = true;
-    }
+
+      mimodal.error = "error no se pudo guardar";     
   }
 
+
+//------------------Editar usuario--------------- 
+
+  edituser(modal, usuario){
+        
+      this.open(this._usuario);
+      this._usuario = usuario;   
+    }
+
+
+//-----------------Eliminar usuario---------------
+deletuser(usuarios,modal,index){
+  var service;
+  if(usuarios[index].id){
+    service = this.http.delete<Usuario>(this.baseUrl + "Values/"+ usuarios[index].id); 
+    service.subscribe(x =>
+      {
+        var usuario = x;
+        usuarios.splice(index,1);
+        modal.close(); 
+      }); 
+  }else{
+    modal.error = "no se puede eliminar";
+  }    
+}
+
+//---------------Filtrar usuario-----------------
   filtrar(){
-    this.usuariosfiltrados = this._usuarios.filter(x => x.Nombre.includes(this.searchText));
+    this.usuarios = this._usuarios.filter(user => user.nombre.includes(this.searchText));
   }
-  faUser = faUser;
 
-  closeResult: string;
-  modalOptions:NgbModalOptions;
-  
- 
   constructor(
-    private modalService: NgbModal, private fb: FormBuilder
+    private modalService: NgbModal, private fb: FormBuilder, private http: HttpClient, 
   ){
-    this.modalOptions = {
+      this.modalOptions = {
       backdrop:'static',
       backdropClass:'customBackdrop'
     }
 
-    this.form = this.fb.group({
-      id: new FormControl('', [Validators.required]),
+      this.form = this.fb.group({
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
       tel: new FormControl('', [Validators.required,Validators.minLength(10), Validators.maxLength(10)]),
       edad: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]),
     });
+
+    this.getUsuarios();
   }
-  
+
+//-------------Aquí se muestran los usuarios------------ 
+  getUsuarios() {
+    return this.http.get<Usuario[]>(this.baseUrl + "Values")
+    .subscribe(x => 
+      { 
+        this._usuarios = x;
+        this.usuarios=JSON.parse(JSON.stringify(x));  
+        //this.usuariosfiltrados=JSON.parse(JSON.stringify(x))
+      });
+  }
+
+//------------------Abrir moodal-------------
   open(content) {
     this.modalService.open(content, this.modalOptions).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

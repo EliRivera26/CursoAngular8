@@ -7,6 +7,7 @@ import { UsuariosPipe } from './pipes/usuarios.pipe';
 import { NgbModule, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgFallimgModule } from 'ng-fallimg';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgFallimgModule } from 'ng-fallimg';
     NgbModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    HttpClientModule,
     NgFallimgModule.forRoot({
       default:'/assets/picture1.png',
       profile: '/assets/default-profile-image.png',

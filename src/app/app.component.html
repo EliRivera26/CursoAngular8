@@ -8,39 +8,29 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
 
-<body  class="text-center">
-  <!--Buscador-->
+<body class="text-center">
+
+<!---------Buscador----------->
   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <!-- <header class="mb-auto">
-        <div class="inner">
-            <h3 class="masthead-brand">Cover</h3>
-            <nav class="nav nav-masthead justify-content-center">
-              <a class="nav-link active" href="#">Home</a>
-              <a class="nav-link" href="#">Features</a>
-              <a class="nav-link" href="#">Contact</a>
-            </nav>
-          </div>
-    </header> -->
     <main class="inner cover">
       <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <!--<input (keyup)="filtrar()" [(ngModel)]="searchText" placeholder="Buscar..." type="text" class="typeahead form-input input_1"
-                  name="searchText">-->
-                  <input class="form-control input_1" type="text" placeholder="Buscar..." aria-label="Buscar" (keyup)="filtrar()" [(ngModel)]="searchText" name="searchText">
-              </div>
-            </div>
-      
-          <!--Boton Modal-->
-      
-            <div class="col-sm-8 mr-10 button_1">
-              <button class="btn btn-lg btn-primary" (click)="open(mymodal)">
-                <fa-icon [icon]="faUser"></fa-icon> Agregar</button>
-            </div>
-      </div>
-          <!--Tabla-->
+        <div class="col-sm-4">
+          <div class="form-group">
+            <input class="form-control input_1" type="text" placeholder="Buscar..." aria-label="Buscar"
+              (keyup)="filtrar()" [(ngModel)]="searchText" name="searchText">
+          </div>
+        </div>
 
-    <div class="row table_1">
+<!-------Botón modal agregar--------->
+        <div class="col-sm-8 mr-10 button_1">
+          <button class="btn btn-lg btn-primary" (click)="open(mymodal)">
+            <fa-icon [icon]="faUser"></fa-icon> Agregar
+          </button>
+        </div>
+      </div>
+
+<!---------Tabla------------->
+      <div class="row table_1">
         <div class="col-sm">
           <table id="Datos" style="border:2px" class="table table-striped">
             <thead>
@@ -53,73 +43,96 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let usuario of usuariosfiltrados">
+              <tr *ngFor="let usuario of usuarios; index as i">
                 <td>
-                  {{usuario.Id}}
+                  {{usuario.id}}
+                <td>
+                  {{usuario.nombre}}
                 </td>
                 <td>
-                  {{usuario.Nombre}}
+                  {{usuario.apellido}}
                 </td>
                 <td>
-                  {{usuario.Apellido}}
+                  {{usuario.telefono}}
                 </td>
                 <td>
-                  {{usuario.Telefono}}
-                </td>
-                <td>
-                  {{usuario.Edad}}
+                  {{usuario.edad}}
+                  <div>
+                    <fa-icon [icon]="faUserEdit" type="button" class="editar_1" (click)="edituser(mymodal,usuario)">
+                    </fa-icon>
+                  </div>
+                  <div data-toggle="modal" data-target="#myModal2">
+                    <fa-icon [icon]="faTrashAlt" type="button" class="eliminar_1" (click)="open(mymodal2)"></fa-icon>
+                  </div>
+                  
+<!------ Modal botón eliminar ------->
+                  <ng-template #mymodal2 let-modal>
+                    <!--<form #formUsuario = "ngForm" [formGroup]="form" novalidate>-->
+                    <div class="modal-header">
+
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Se eliminará este usuario
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" (click)="deletuser(usuarios,modal,i)">Aceptar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close('Save click')">Cerrar</button>
+                      </div>
+                    </div>
+                    <!--</form>-->
+                  </ng-template>
+<!---------fin modal eliminar---------->
+
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-        <!--Modal-->
+<!-------------fin tabla--------------->
 
-        <ng-template #mymodal let-modal>
-            <form #formUsuario = "ngForm" [formGroup]="form" novalidate>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Ingresar datos Usuario</h4>
-              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-              <input class="form-control" type="text" name="id" placeholder="Id" [(ngModel)]="_usuario.Id" formControlName="id">
-                <span *ngIf="!_usuario.Id && reset" class="mierror">Este campo es requerido</span>
-            </div>
+<!-----------Modal botón agregar usuario---------->
+      <ng-template #mymodal let-modal>
+        <form #formUsuario="ngForm" [formGroup]="form" novalidate>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Ingresar datos Usuario</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
             <div class="form-group">
-              <input class="form-control" type="text" name="nombre" placeholder="Nombre" [(ngModel)]="_usuario.Nombre" formControlName="nombre">
+              <input class="form-control" type="text" name="nombre" placeholder="Nombre" [(ngModel)]="_usuario.nombre"
+                formControlName="nombre">
               <span *ngIf="!_usuario.Nombre && reset" class="mierror">Este campo es requerido</span>
             </div>
             <div class="form-group">
-              <input class="form-control" type="text" name="apellido" placeholder="Apellido" [(ngModel)]="_usuario.Apellido" formControlName="apellido">
+              <input class="form-control" type="text" name="apellido" placeholder="Apellido"
+                [(ngModel)]="_usuario.apellido" formControlName="apellido">
               <span *ngIf="!_usuario.Apellido && reset" class="mierror">Este campo es requerido</span>
             </div>
             <div class="form-group">
-              <input class="form-control" type="number" name="tel" placeholder="Teléfono" [(ngModel)]="_usuario.Telefono" formControlName="tel">
+              <input class="form-control" type="number" name="tel" placeholder="Teléfono"
+                [(ngModel)]="_usuario.telefono" formControlName="tel">
               <span *ngIf="!_usuario.Telefono && reset" class="mierror">Este campo es requerido y acepta solo números</span>
             </div>
             <div class="form-group">
-              <input class="form-control" type="number" name="edad" placeholder="Edad" [(ngModel)]="_usuario.Edad" formControlName="edad">
+              <input class="form-control" type="number" name="edad" placeholder="Edad" [(ngModel)]="_usuario.edad"
+                formControlName="edad">
               <span *ngIf="!_usuario.Edad && reset" class="mierror">Este campo es requerido y acepta solo números</span>
             </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" aria-label="Close" (click)="adduser(modal)">Guardar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal"(click)="modal.close('Save click')">Cerrar</button>
-            </div>
-            </form>
-          </ng-template>
+          </div>
+          <span *ngIf="modal.error">{{modal.error}}</span>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" aria-label="Close" (click)="adduser(modal,_usuario)">Guardar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close('Save click')">Cerrar</button>
+          </div>
+        </form>
+      </ng-template>
     </main>
   </div>
-  
-  <footer class="mastfoot mt-auto">
-      <div class="inner">
-        <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      </div>
-    </footer>
 </body>
 
 </html>
