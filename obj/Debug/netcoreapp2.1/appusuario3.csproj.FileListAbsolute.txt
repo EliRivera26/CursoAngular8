@@ -1,0 +1,14 @@
+C:\Users\eliza\source\repos\appusuario3\appusuario3\bin\Debug\netcoreapp2.1\appusuario3.deps.json
+C:\Users\eliza\source\repos\appusuario3\appusuario3\bin\Debug\netcoreapp2.1\appusuario3.runtimeconfig.json
+C:\Users\eliza\source\repos\appusuario3\appusuario3\bin\Debug\netcoreapp2.1\appusuario3.runtimeconfig.dev.json
+C:\Users\eliza\source\repos\appusuario3\appusuario3\bin\Debug\netcoreapp2.1\appusuario3.dll
+C:\Users\eliza\source\repos\appusuario3\appusuario3\bin\Debug\netcoreapp2.1\appusuario3.pdb
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.csprojAssemblyReference.cache
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.csproj.CoreCompileInputs.cache
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.RazorAssemblyInfo.cache
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.RazorAssemblyInfo.cs
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.AssemblyInfoInputs.cache
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.AssemblyInfo.cs
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.RazorTargetAssemblyInfo.cache
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.dll
+C:\Users\eliza\source\repos\appusuario3\appusuario3\obj\Debug\netcoreapp2.1\appusuario3.pdb
