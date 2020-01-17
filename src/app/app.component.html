@@ -10,18 +10,18 @@
 
 <body class="text-center">
 
-<!---------Buscador----------->
+  <!---------Buscador----------->
   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main class="inner cover">
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <input class="form-control input_1" type="text" placeholder="Buscar..." aria-label="Buscar"
-              (keyup)="filtrar()" [(ngModel)]="searchText" name="searchText">
+                   (keyup)="filtrar()" [(ngModel)]="searchText" name="searchText">
           </div>
         </div>
 
-<!-------Botón modal agregar--------->
+        <!-------Botón modal agregar--------->
         <div class="col-sm-8 mr-10 button_1">
           <button class="btn btn-lg btn-primary" (click)="open(mymodal)">
             <fa-icon [icon]="faUser"></fa-icon> Agregar
@@ -29,17 +29,17 @@
         </div>
       </div>
 
-<!---------Tabla------------->
+      <!---------Tabla------------->
       <div class="row table_1">
         <div class="col-sm">
           <table id="Datos" style="border:2px" class="table table-striped">
             <thead>
               <tr>
-                <th class="bg-primary">Id</th>
-                <th class="bg-primary">Nombre</th>
-                <th class="bg-primary">Apellido</th>
-                <th class="bg-primary">Teléfono</th>
-                <th class="bg-primary">Edad</th>
+                <th class="bg-primary" (click)='getUsuarios("Id")'>Id</th>
+                <th class="bg-primary" (click)='getUsuarios("Nombre")'>Nombre</th>
+                <th class="bg-primary" (click)='getUsuarios("Apellido")'>Apellido</th>
+                <th class="bg-primary" (click)='getUsuarios("Teléfono")'>Teléfono</th>
+                <th class="bg-primary" (click)='getUsuarios("Edad")'>Edad</th>
               </tr>
             </thead>
             <tbody>
@@ -64,10 +64,9 @@
                   <div data-toggle="modal" data-target="#myModal2">
                     <fa-icon [icon]="faTrashAlt" type="button" class="eliminar_1" (click)="open(mymodal2)"></fa-icon>
                   </div>
-                  
-<!------ Modal botón eliminar ------->
+
+                  <!------ Modal botón eliminar ------->
                   <ng-template #mymodal2 let-modal>
-                    <!--<form #formUsuario = "ngForm" [formGroup]="form" novalidate>-->
                     <div class="modal-header">
 
                       <!-- Modal body -->
@@ -77,13 +76,18 @@
 
                       <!-- Modal footer -->
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" (click)="deletuser(usuarios,modal,i)">Aceptar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close('Save click')">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"
+                                (click)="deletuser(usuarios,modal,i)">
+                          Aceptar
+                        </button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                (click)="modal.close('Save click')">
+                          Cerrar
+                        </button>
                       </div>
                     </div>
-                    <!--</form>-->
                   </ng-template>
-<!---------fin modal eliminar---------->
+                  <!---------fin modal eliminar---------->
 
                 </td>
               </tr>
@@ -91,11 +95,10 @@
           </table>
         </div>
       </div>
-<!-------------fin tabla--------------->
-
-<!-----------Modal botón agregar usuario---------->
+      <!-------------fin tabla--------------->
+      <!-----------Modal botón agregar usuario---------->
       <ng-template #mymodal let-modal>
-        <form #formUsuario="ngForm" [formGroup]="form" novalidate>
+        <form [formGroup]="formUsuario" novalidate>
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Ingresar datos Usuario</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -105,29 +108,29 @@
           <div class="modal-body">
             <div class="form-group">
               <input class="form-control" type="text" name="nombre" placeholder="Nombre" [(ngModel)]="_usuario.nombre"
-                formControlName="nombre">
-              <span *ngIf="!_usuario.Nombre && reset" class="mierror">Este campo es requerido</span>
+                     formControlName="nombre" [ngClass]="{ 'is-invalid': enviado && fu.nombre.errors }">
+              <span *ngIf="fu.nombre.errors && enviado" class="mierror">Este campo es requerido</span>
             </div>
             <div class="form-group">
               <input class="form-control" type="text" name="apellido" placeholder="Apellido"
-                [(ngModel)]="_usuario.apellido" formControlName="apellido">
-              <span *ngIf="!_usuario.Apellido && reset" class="mierror">Este campo es requerido</span>
+                     [(ngModel)]="_usuario.apellido" formControlName="apellido" [ngClass]="{ 'is-invalid': enviado && fu.apellido.errors }">
+              <span *ngIf="fu.apellido.errors && enviado" class="mierror">Este campo es requerido</span>
             </div>
             <div class="form-group">
               <input class="form-control" type="number" name="tel" placeholder="Teléfono"
-                [(ngModel)]="_usuario.telefono" formControlName="tel">
-              <span *ngIf="!_usuario.Telefono && reset" class="mierror">Este campo es requerido y acepta solo números</span>
+                     [(ngModel)]="_usuario.telefono" formControlName="tel" [ngClass]="{ 'is-invalid': enviado && fu.tel.errors }">
+              <span *ngIf="fu.tel.errors && enviado" class="mierror">Este campo es requerido y acepta solo números</span>
             </div>
             <div class="form-group">
               <input class="form-control" type="number" name="edad" placeholder="Edad" [(ngModel)]="_usuario.edad"
-                formControlName="edad">
-              <span *ngIf="!_usuario.Edad && reset" class="mierror">Este campo es requerido y acepta solo números</span>
+                     formControlName="edad" [ngClass]="{ 'is-invalid': enviado && fu.edad.errors }">
+              <span *ngIf="fu.edad.errors && enviado" class="mierror">Este campo es requerido y acepta solo números</span>
             </div>
           </div>
           <span *ngIf="modal.error">{{modal.error}}</span>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" aria-label="Close" (click)="adduser(modal,_usuario)">Guardar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close('Save click')">Cerrar</button>
+            <button type="button" class="btn btn-primary" type="reset" data-dismiss="modal" (click)="onReset(modal)">Cerrar</button>
           </div>
         </form>
       </ng-template>

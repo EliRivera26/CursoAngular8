@@ -12812,11 +12812,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eliza\\source\\repos\\appusuario3\\appusuario3\\appusuario3.csproj",
+      "projectUniqueName": "C:\\Users\\eliza\\Documents\\Repositorios\\RepoGitKraken\\CursoAngular8\\appusuario3.csproj",
       "projectName": "appusuario3",
-      "projectPath": "C:\\Users\\eliza\\source\\repos\\appusuario3\\appusuario3\\appusuario3.csproj",
+      "projectPath": "C:\\Users\\eliza\\Documents\\Repositorios\\RepoGitKraken\\CursoAngular8\\appusuario3.csproj",
       "packagesPath": "C:\\Users\\eliza\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eliza\\source\\repos\\appusuario3\\appusuario3\\obj\\",
+      "outputPath": "C:\\Users\\eliza\\Documents\\Repositorios\\RepoGitKraken\\CursoAngular8\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
